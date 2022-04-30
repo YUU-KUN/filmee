@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\PassportAuthController;
+use App\Http\Controllers\API\GenreController;
+use App\Http\Controllers\API\MovieController;
+use App\Http\Controllers\API\CommentController;
  
 /*
 |--------------------------------------------------------------------------
@@ -15,13 +18,16 @@ use App\Http\Controllers\API\PassportAuthController;
 |
 */
 
-Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
+Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('register', [PassportAuthController::class, 'register']);
+Route::post('signup', [PassportAuthController::class, 'signup']);
 Route::post('login', [PassportAuthController::class, 'login']);
   
 Route::middleware('auth:api')->group(function () {
     Route::get('get-user', [PassportAuthController::class, 'userInfo']);
 });
+Route::resource('genres', GenreController::class);
+Route::resource('movies', MovieController::class);
+Route::resource('comments', CommentController::class);
